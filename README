@@ -1,0 +1,17 @@
+fsmanage 0-next.
+
+A Python library for flexible management of arbitrary filesystems.
+
+Current status: basic class interfaces are defined as stubs.
+
+http://ikn.org.uk/fsmanage
+
+    LICENSE
+
+Licensed under the GNU General Public License, version 3; if this was not
+included, you can find it here:
+    http://www.gnu.org/licenses/gpl-3.0.txt
+
+    DEPENDENCIES
+
+Python (3.3 or later 3.x)

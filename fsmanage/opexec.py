@@ -110,6 +110,7 @@ class OperationManager (metaclass=abc.ABCMeta):
     def execute (self, ops, confirm=None, allow_parallel=True):
         # raises TypeError for unsupported op
         # confirm=None means always confirm
+        # handles failure_behaviour
         # call history.add with OperationHistoryEvent(self._execute, ops, confirm, allow_parallel, undo_yields_attention)
         # returns Future with executor's result and OperationException exception
         pass

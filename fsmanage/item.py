@@ -15,7 +15,7 @@ class Dir (Item):
 ROOT = Dir(())
 
 
-def OperableItem (Item):
+class OperableItem (Item):
     def __init__ (self, name, parent):
         pass
 

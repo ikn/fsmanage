@@ -35,6 +35,7 @@ class OperationHistory (History):
 
 class OperationExecutor (metaclass=abc.ABCMeta):
     # .supported_operations
+    # .future_type - type of Future returned by execute/undo/get_metadata
 
     # runs single operations
 

@@ -14,7 +14,7 @@ If this was not included, it can be found here:
 todo
 ----
 
- * full documentation, and sphinx with makefile
+ * full documentation
     * when returning Future, just use the type (concurrent/asyncio) we started with (bottom level is OperationExecutor)
     * split out enums into separate classes?
         * HistoryEventResult, AttentionItems, Confirmation, OperationManager

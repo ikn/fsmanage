@@ -168,9 +168,9 @@ class AttentionItems:
 
 """
 
-    #: attention type indicating that the items are recently new or changed
+    #: Attention type indicating that the items are recently new or changed
     CHANGED = 0
-    #: attention type that marks the items for use in a future action
+    #: Attention type that marks the items for use in a future action
     MARKED = 1
 
     def __init__ (self, parent, items=()):
@@ -178,4 +178,3 @@ class AttentionItems:
         self.parent = None
         #: ``items`` argument.
         self.items = None
-        pass

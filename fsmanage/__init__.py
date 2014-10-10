@@ -15,7 +15,6 @@ todo
 ----
 
  * full documentation
-    * when returning Future, just use the type (concurrent/asyncio) we started with (bottom level is OperationExecutor)
     * split out enums into separate classes?
         * HistoryEventResult, AttentionItems, Confirmation, OperationManager
 
@@ -55,7 +54,7 @@ OperationExecutor
 
 OperationManager
     SynchronousOperationManager
-    AsyncioOperationManager
+    AsyncioOperationManager (requires Python 3.4)
     ThreadedOperationManager
     MultiprocessingOperationManager
 
@@ -98,6 +97,7 @@ future
     * more flexible expiry methods
         * pass sequence of HistoryExpiration which each determine when to expire an event
     * put in separate package
+    * can initialise .events/.position on creation
  * qt metadata viewer/editor (action: 'properties' or something)
  * qt History viewer/editor (events need icon and text)
 

@@ -61,8 +61,10 @@ def action_manager_support_state (manager):
 
 
 class NavigationHistoryEvent (HistoryEvent):
-    def __init__ (self, path=None):
-        # value is path; None is history.root
+    # .path
+
+    def __init__ (self, path_before=None, path_after=None):
+        # None path is history.root
         pass
 
 
@@ -76,6 +78,10 @@ class NavigationHistory (History):
         # root: what to show in toplevel dir
         #  * Dir to show its contents
         #  * [Item] giving contents (eg. for search results)
+        pass
+
+    def navigate (self, path):
+        # creates event with correct before/after paths
         pass
 
 

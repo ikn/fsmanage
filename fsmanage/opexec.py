@@ -219,7 +219,7 @@ Abstract method - must be implemented by subclasses.
     def execute (self, ops, confirm=None, allow_parallel=True):
         """Execute a group of operations.
 
-:arg ops: sequence of :class:`Operation fsmanage.operation.Operation`
+:arg ops: sequence of :class:`Operation <fsmanage.operation.Operation>`
     instances; adding them together places them in the same
     :class:`OperationHistoryEvent`, so they are grouped for :meth:`undo
     <fsmanage.history.History.undo>`.

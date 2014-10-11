@@ -13,12 +13,8 @@ item's type, or its type is unknown and shouldn't matter for what you're doing.
 """
 
     def __init__ (self, path):
-        # path is tuple of strings
-        pass
-
-    @property
-    def path (self):
-        """``path`` argument to the constructor."""
+        #: ``path`` argument.
+        self.path = None
         pass
 
 
@@ -41,6 +37,11 @@ The ``path`` argument must not be empty.
 
     def __init__ (self, path):
         # check path is non-empty
+        pass
+
+    @property
+    def parent (self):
+        """Path to the directory containing this item."""
         pass
 
     @property

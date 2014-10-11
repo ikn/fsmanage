@@ -65,8 +65,8 @@ The context matches if exactly one item is selected and it matches
 class StateActionTarget (ActionTarget):
     """Target which is satisfied based on a generic state storage.
 
-:arg properties: set of property names in the state needed to check the target
-    conditions.
+:arg properties: sequence of property names in the state needed to check the
+    target conditions; must be hashable.
 :arg match_state: function that takes the context and returns whether it
     matches this target.  By default, it always matches.
 
@@ -78,7 +78,7 @@ required properties should be reflected in further usages of the state.
 
     def __init__ (self, properties, match_state=None):
         #: ``properties`` argument.
-        self.properties = properties
+        self.properties = None
 
     def context_matches (self, state):
         """:inherit:"""

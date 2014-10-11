@@ -15,23 +15,25 @@ todo
 ----
 
  * full documentation
-    * split out enums into separate classes?
-        * HistoryEventResult, AttentionItems, Confirmation, OperationManager
+    * better overview - mention all main classes and their basic role
  * check everything returning future_type has access to OperationExecutor
 
 to get something working
  * the code
- * basic implementations of functions/abstract classes, including __str__/__repr__
+ * basic implementations of functions/abstract classes
  * tests
  * -> ikn
 
 for GCEdit
  * needed implementations of functions/abstract classes
+    * mention ones where you only use one alternative in index.rst
  * searching (like gcutil; also by metadata, in-file search, limited depth)
     * needs to be async like opmgr
  * sorting - eg. natural sort, dirs first...
  * qt
 
+ * __str__/__repr__ implementations
+ * full examples in documentation
  * internationalisation
 
 implementations

@@ -2,7 +2,8 @@ fsmanage 0-next.
 
 A Python library for flexible management of arbitrary filesystems.
 
-Current status: basic class interfaces are defined as stubs.
+Current status: basic class interfaces are defined as stubs with full
+documentation.
 
 http://ikn.org.uk/fsmanage
 

@@ -92,7 +92,10 @@ future
  * can intercept and handle confirmations in ActionManager
  * operation manager exposes running operations and current progress
  * history
+    * something to handle HistoryActionResult.FAILED - option to reject all work if this happens?
     * can set max number of running events
+        * events can contribute more than 1
+        * move support for event groups and allow_running to History
     * has optional branching behaviour - .redo([branch=most recent])
     * more flexible expiry methods
         * pass sequence of HistoryExpiration which each determine when to expire an event

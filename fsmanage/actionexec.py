@@ -27,7 +27,7 @@ class ActionManager:
         pass
 
     def add_actions (self, *actions):
-        # raise TypeError if op_manager doesn't support op required by action
+        # raise TypeError if op_manager.executor doesn't support op required by action
         # raise TypeError if action target types not supported
         # actions are Action subclasses; instantiates them when storing
         pass
@@ -42,8 +42,8 @@ class ActionManager:
         # no return value
         pass
 
-    def attention (self, attention_type, items):
-        # attention_type: AttentionItems.CHANGED/MARKED
+    def attention (self, attn_type, items):
+        # attn_type: AttentionItems.CHANGED/MARKED
         pass
 
 

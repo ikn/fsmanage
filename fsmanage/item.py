@@ -7,6 +7,9 @@ class Item:
 Just used to represent an item's type and location when querying or
 manipulating the real items represented.
 
+This class may be used directly when you don't want to be specific about the
+item's type, or its type is unknown and shouldn't matter for what you're doing.
+
 """
 
     def __init__ (self, path):
@@ -144,13 +147,12 @@ class ItemFilter:
 :returns: :attr:`future <fsmanage.opexec.OperationExecutor.future_type>` whose
     result is a boolean indicating whether ``item`` matches.
 
-Filters can be combined with ``or`` and ``and`` boolean operators.
+Filters can be combined using binary ``or`` (``a | b``) and ``and``
+(``a & b``).
 
 """
         pass
 
-    # these ops do collapsing based on operation already in self/other
-    # other can be arg to init (need __ror__/__rand__?)
     def __or__ (self, other):
         pass
 
@@ -161,10 +163,12 @@ Filters can be combined with ``or`` and ``and`` boolean operators.
 class AttentionItems:
     """Representing a group of items needing attention.
 
+:arg items: the :class:`Item` instances in question.
 :arg parent: :class:`Item` representing a location for the items in question -
     this makes sense when the items might not exist, but there is a common link
     between them (usually the :class:`Dir` containing them).
-:arg items: the :class:`Item` instances in question.
+
+Instances may be combined using binary ``or`` (``a | b``).
 
 """
 
@@ -173,8 +177,11 @@ class AttentionItems:
     #: Attention type that marks the items for use in a future action
     MARKED = 1
 
-    def __init__ (self, parent, items=()):
-        #: ``parent`` argument.
-        self.parent = None
+    def __init__ (self, items=(), parent=None):
         #: ``items`` argument.
         self.items = None
+        #: ``parent`` argument.
+        self.parent = None
+
+    def __or__ (self, other):
+        pass

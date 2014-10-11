@@ -131,7 +131,7 @@ This is an abstract property - it must be defined by subclasses.
 
 :attr:`CONFIRM`, :attr:`REJECT` or :attr:`CONFIRM_ALL`.
 
-:raises TypeError: if this has already been called.
+:raises TypeError: if this method has already been called for this instance.
 
 """
         pass

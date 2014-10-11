@@ -39,8 +39,11 @@ Knows how to make (and possibly revert) the change.
     def __init__ (self):
         pass
 
-    def execute (self):
+    def execute (self, revert_on_failure):
         """Make the change associated with this event.
+
+:arg revert_on_failure: whether to attempt to revert any changes made if
+    execution fails.
 
 :returns: :attr:`future <fsmanage.opexec.OperationExecutor.future_type>` whose
     result is a :class:`HistoryEventResult`.
@@ -50,11 +53,14 @@ This implementation does nothing.
 """
         pass
 
-    def undo (self):
+    def undo (self, revert_on_failure):
         """Undo the change associated with this event, if possible.
 
 Should raise :class:`TypeError` if this is not possible (and :attr:`can_undo`
 should be :obj:`False`).
+
+:arg revert_on_failure: whether to attempt to revert any changes made if
+    execution fails.
 
 :returns: :attr:`future <fsmanage.opexec.OperationExecutor.future_type>` whose
     result is a :class:`HistoryEventResult`.
@@ -70,6 +76,11 @@ class History:
 
 :arg permanent: if :obj:`True`, changes to this history are irreversible,
     regardless of :attr:`HistoryEvent.can_undo`.
+:arg require_reversible: if :obj:`True` and ``permanent`` is :obj:`False`,
+    :meth:`add` will raise :class:`TypeError` when the passed ``event`` does
+    not support :meth:`undo <HistoryEvent.undo>`.
+:arg revert_on_failure: whether to try to revert execution of an event when it
+    fails.
 :arg max_events: if given, this restricts the maximum number of saved events
     (accessed through :attr:`past`, :meth:`undo`, etc.) to this many.
 :arg expire_future_first: if ``max_events`` is specified, this determines which
@@ -83,9 +94,6 @@ class History:
 :arg current_time: a function that takes no arguments and returns the current
     time as a number.  Only relative times matter, and the magnitude only
     matters as regards ``max_event_age``.
-:arg require_reversible: if :obj:`True` and ``permanent`` is :obj:`False`,
-    :meth:`add` will raise :class:`TypeError` when the passed ``event`` does
-    not support :meth:`undo <HistoryEvent.undo>`.
 
 """
 
@@ -95,11 +103,16 @@ class History:
     #: subclass).
     event_type = HistoryEvent
 
-    def __init__ (self, permanent=False, max_events=None,
+    def __init__ (self, permanent=False, require_reversible=False,
+                  revert_on_failure=True, max_events=None,
                   expire_future_first=False, max_event_age=None,
-                  current_time=time.monotonic, require_reversible=False):
+                  current_time=time.monotonic):
         #: ``permanent`` argument.
         self.permanent = None
+        #: ``require_reversible`` argument.
+        self.require_reversible = None
+        #: ``revert_on_failure`` argument.
+        self.revert_on_failure = None
         #: ``max_events`` argument.
         self.max_events = None
         #: ``expire_future_first`` argument.
@@ -108,8 +121,6 @@ class History:
         self.max_event_age = None
         #: ``current_time`` argument.
         self.current_time = None
-        #: ``require_reversible`` argument.
-        self.require_reversible = None
         #: Current index in :attr:`events` - those before this index are in the
         #: 'past' (have been executed), and those after it are in the 'future'
         #: (have been reverted).
@@ -166,9 +177,10 @@ In execution order.  See also :attr:`position`.
     def can_undo (self):
         """Return whether there is something that can be undone.
 
-Note that a subsequent call to :meth:`undo` is not guaranteed to succeed - this
-function should only really be used when you do not intend to undo anything
-(eg. to indicate whether undo is possible in a user interface).
+Note that if this function returns :obj:`True`, a subsequent call to
+:meth:`undo` is not guaranteed to succeed - this function should only really be
+used when you do not intend to undo anything (eg. to indicate whether undo is
+possible in a user interface).
 
 """
         pass

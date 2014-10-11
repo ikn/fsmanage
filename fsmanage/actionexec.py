@@ -70,6 +70,7 @@ class NavigationHistoryEvent (HistoryEvent):
 
 class NavigationHistory (History):
     event_type = NavigationHistoryEvent
+    # .root
 
     # None is .root
     cwd = None

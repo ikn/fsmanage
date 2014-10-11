@@ -17,6 +17,7 @@ todo
  * full documentation
     * split out enums into separate classes?
         * HistoryEventResult, AttentionItems, Confirmation, OperationManager
+ * check everything returning future_type has access to OperationExecutor
 
 to get something working
  * the code
@@ -30,6 +31,8 @@ for GCEdit
     * needs to be async like opmgr
  * sorting - eg. natural sort, dirs first...
  * qt
+
+ * internationalisation
 
 implementations
 ---------------

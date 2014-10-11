@@ -21,10 +21,10 @@ Usage is split between operations and actions:
   you want to work with options, you probably want to use an
   :class:`OperationManager <fsmanage.opexec.OperationManager>`.
 
-- An action represents a way a user might want to interfact with the
-  filesystem, and might represent one or more operations, or a query that
-  doesn't cause any changes.  For example: cut, paste, open, undo.  If you want
-  to work with actions, you probably want to use an :class:`ActionManager
+- An action represents a way a user might want to interact with the filesystem,
+  and might represent one or more operations, or a query that doesn't cause any
+  changes.  For example: cut, paste, open, undo.  If you want to work with
+  actions, you probably want to use an :class:`ActionManager
   <fsmanage.actionexec.ActionManager>`.
 
 Modules

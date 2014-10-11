@@ -37,7 +37,7 @@ filesystem implementation should be implemented in methods of the operation.
 
     @property
     @abc.abstractmethod
-    def name ():
+    def name (self):
         """Lower-case name for the operation."""
         pass
 

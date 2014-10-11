@@ -171,6 +171,8 @@ In execution order.  See also :attr:`position`.
     :obj:`True` and ``event`` does not support :meth:`undo
     <HistoryEvent.undo>`.
 
+If executing the event fails, it is not added to :attr:`events`.
+
 """
         pass
 

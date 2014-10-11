@@ -14,8 +14,6 @@ If this was not included, it can be found here:
 todo
 ----
 
- * full documentation
-    * better overview - mention all main classes and their basic role
  * check everything returning future_type has access to OperationExecutor
 
 to get something working
@@ -101,6 +99,7 @@ future
     * can set max number of running events
         * events can contribute more than 1
         * move support for event groups and allow_running to History
+        * can say events conflict with each other somehow?
     * has optional branching behaviour - .redo([branch=most recent])
     * more flexible expiry methods
         * pass sequence of HistoryExpiration which each determine when to expire an event

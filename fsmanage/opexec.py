@@ -27,7 +27,7 @@ class OperationHistoryEvent (HistoryEvent):
         #: ``ops`` argument.
         self.operations = None
 
-    def execute (self, revert_on_failure):
+    def execute (self, future_type):
         """:meth:`HistoryEvent.execute
 <fsmanage.history.HistoryEvent.execute>`.
 
@@ -41,7 +41,7 @@ Returned future is from :meth:`OperationExecutor.execute`.
         """:inherit:"""
         pass
 
-    def undo (self):
+    def undo (self, future_type):
         """:meth:`HistoryEvent.undo <fsmanage.history.HistoryEvent.undo>`.
 
 Returned future is from :meth:`OperationExecutor.undo`.
@@ -125,9 +125,10 @@ possible in a user interface).
     <fsmanage.operation.Confirmation>` instance whenever there is a question
     for the user; a response is required.
 
-:returns: :attr:`future_type` whose result is an :class:`AttentionItems
-    <fsmanage.item.AttentionItems>` instance and whose exception is an
-    :class:`OperationException <fsmanage.operation.OperationException>`.
+:returns: :attr:`future <future_type>` whose result is an
+    :class:`AttentionItems <fsmanage.item.AttentionItems>` instance and whose
+    exception is an :class:`OperationException
+    <fsmanage.operation.OperationException>`.
 
 :raises TypeError: if ``op`` is not in :attr:`supported_operations`.
 
@@ -139,9 +140,10 @@ possible in a user interface).
 
 :arg op: :class:`Operation <fsmanage.operation.Operation>` instance to execute.
 
-:returns: :attr:`future_type` whose result is an :class:`AttentionItems
-    <fsmanage.item.AttentionItems>` instance and whose exception is an
-    :class:`OperationException <fsmanage.operation.OperationException>`.
+:returns: :attr:`future <future_type>` whose result is an
+    :class:`AttentionItems <fsmanage.item.AttentionItems>` instance and whose
+    exception is an :class:`OperationException
+    <fsmanage.operation.OperationException>`.
 
 :raises TypeError: if ``op`` is not in :attr:`supported_operations`, or if undo
     is not supported for operations of ``op``'s type.
@@ -161,9 +163,9 @@ possible in a user interface).
           a sequence of :class:`Item <fsmanage.item.Item>` instances
           'contained' in the directory.
 
-:returns: :attr:`future_type` whose result is a :class:`dict` with keys from
-    ``properties`` giving the metadata.  If the value of a property cannot be
-    determined for any reason, it is omitted from the result.
+:returns: :attr:`future <future_type>` whose result is a :class:`dict` with
+    keys from ``properties`` giving the metadata.  If the value of a property
+    cannot be determined for any reason, it is omitted from the result.
 
 """
         pass
@@ -202,9 +204,9 @@ To undo and redo, use methods of :attr:`history`.
 :arg args: arguments taken by the :class:`OperationExecutor` method
     corresponding to ``action``.
 
-:returns: :attr:`future_type <OperationExecutor.future_type>` as returned by
-    the called method.  If the method raises any other exception (quite
-    possibly :class:`TypeError`), return a future containing it.
+:returns: :attr:`future <OperationExecutor.future_type>` as returned by the
+    called method.  If the method raises any other exception (quite possibly
+    :class:`TypeError`), return a future containing it.
 
 Abstract method - must be implemented by subclasses.
 

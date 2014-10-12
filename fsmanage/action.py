@@ -20,8 +20,8 @@ met.
 :arg op_manager: :class:`OperationManager <fsmanage.opexec.OperationManager>`
     to be used if necessary.
 
-:returns: :attr:`future_type <fsmanage.opexec.OperationExecutor.future_type>`
-    whose result is a boolean indicating whether the context matches.
+:returns: :attr:`future <fsmanage.opexec.OperationExecutor.future_type>` whose
+    result is a boolean indicating whether the context matches.
 
 """
         pass
@@ -188,8 +188,8 @@ These are the targets used to determine if this action can be run.
 :arg target_contexts: sequence of contexts matching up with the  :attr:`target`
     sequence.
 
-:returns: :attr:`future_type <fsmanage.opexec.OperationExecutor.future_type>`
-    whose result is a boolean.
+:returns: :attr:`future <fsmanage.opexec.OperationExecutor.future_type>` whose
+    result is a boolean.
 
 An action can be run if all contexts match their corresponding targets.
 

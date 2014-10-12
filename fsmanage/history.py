@@ -39,31 +39,28 @@ Knows how to make (and possibly revert) the change.
     def __init__ (self):
         pass
 
-    def execute (self, revert_on_failure):
+    def execute (self, future_type):
         """Make the change associated with this event.
 
-:arg revert_on_failure: whether to attempt to revert any changes made if
-    execution fails.
+:arg future_type: :attr:`History.future_type`.
 
-:returns: :attr:`future <fsmanage.opexec.OperationExecutor.future_type>` whose
-    result is a :class:`HistoryEventResult`.
+:returns: :attr:`future <History.future_type>` whose result is a
+    :class:`HistoryEventResult`.
 
 This implementation does nothing.
 
 """
         pass
 
-    def undo (self, revert_on_failure):
+    def undo (self, future_type):
         """Undo the change associated with this event, if possible.
 
-Should raise :class:`TypeError` if this is not possible (and :attr:`can_undo`
-should be :obj:`False`).
+:arg future_type: :attr:`History.future_type`.
 
-:arg revert_on_failure: whether to attempt to revert any changes made if
-    execution fails.
+:returns: :attr:`future <History.future_type>` whose result is a
+    :class:`HistoryEventResult`.
 
-:returns: :attr:`future <fsmanage.opexec.OperationExecutor.future_type>` whose
-    result is a :class:`HistoryEventResult`.
+:raises TypeError: if this event cannot be undone.
 
 This implementation does nothing.
 
@@ -74,6 +71,10 @@ This implementation does nothing.
 class History:
     """Manage a history of events.
 
+:arg future_type: type of futures returned by :meth:`add`, :meth:`undo` and
+    :meth:`redo`.  Must support at least the ``add_done_callback``,
+    ``set_result``, ``set_exception``, ``result`` and ``exception`` properties
+    of :class:`concurrent.futures.Future`.
 :arg permanent: if :obj:`True`, changes to this history are irreversible,
     regardless of :attr:`HistoryEvent.can_undo`.
 :arg require_reversible: if :obj:`True` and ``permanent`` is :obj:`False`,
@@ -103,10 +104,12 @@ class History:
     #: subclass).
     event_type = HistoryEvent
 
-    def __init__ (self, permanent=False, require_reversible=False,
+    def __init__ (self, future_type, permanent=False, require_reversible=False,
                   revert_on_failure=True, max_events=None,
                   expire_future_first=False, max_event_age=None,
                   current_time=time.monotonic):
+        #: ``future_type`` argument.
+        self.future_type = None
         #: ``permanent`` argument.
         self.permanent = None
         #: ``require_reversible`` argument.
@@ -163,8 +166,8 @@ In execution order.  See also :attr:`position`.
 :arg event: :class:`HistoryEvent` to add; :meth:`execute
     <HistoryEvent.execute>` is called.
 
-:returns: :attr:`future <fsmanage.opexec.OperationExecutor.future_type>` whose
-    result is a :class:`HistoryEventResult` from executing the event.
+:returns: :attr:`future <History.future_type>` whose result is a
+    :class:`HistoryEventResult` from executing the event.
 
 :raises TypeError: if ``event`` is not of type :attr:`event_type`; or if
     :attr:`permanent` is :obj:`False`, :attr:`require_reversible` is
@@ -192,8 +195,8 @@ possible in a user interface).
 
 This is the last event in :attr:`past`.
 
-:returns: :attr:`future <fsmanage.opexec.OperationExecutor.future_type>` whose
-    result is a :class:`HistoryEventResult` from undoing the event.
+:returns: :attr:`future <History.future_type>` whose result is a
+    :class:`HistoryEventResult` from undoing the event.
 
 :raises TypeError: if this is not possible - if there are no events to undo, or
     if the most recently executed event cannot be undone.
@@ -214,8 +217,8 @@ See :meth:`can_undo` for usage notes.
 
 This is the first event in :attr:`future`.
 
-:returns: :attr:`future <fsmanage.opexec.OperationExecutor.future_type>` whose
-    result is a :class:`HistoryEventResult` from redoing the event.
+:returns: :attr:`future <History.future_type>` whose result is a
+    :class:`HistoryEventResult` from redoing the event.
 
 :raises TypeError: if there are no events to redo.
 

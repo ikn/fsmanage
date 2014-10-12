@@ -14,8 +14,6 @@ If this was not included, it can be found here:
 todo
 ----
 
- * check everything returning future_type has access to OperationExecutor
-
 to get something working
  * the code
  * basic implementations of functions/abstract classes
@@ -105,6 +103,7 @@ future
         * pass sequence of HistoryExpiration which each determine when to expire an event
     * put in separate package
     * can initialise .events/.position on creation
+    * make results available (HistoryActionResult)
  * qt metadata viewer/editor (action: 'properties' or something)
  * qt History viewer/editor (events need icon and text)
 

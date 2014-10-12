@@ -169,7 +169,6 @@ class NavigationHistoryEvent (HistoryEvent):
         self.path_before = None
         #: ``path_after`` argument.
         self.path_after = None
-        pass
 
 
 class NavigationHistory (History):

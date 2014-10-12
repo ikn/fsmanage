@@ -1,4 +1,4 @@
-:mod:`action <fsmanage.action>`---user interfactions with filesystems
-=====================================================================
+:mod:`action <fsmanage.action>`---user interactions with filesystems
+====================================================================
 
 .. automodule:: fsmanage.action

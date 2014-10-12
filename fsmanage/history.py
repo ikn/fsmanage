@@ -104,6 +104,11 @@ class History:
     #: subclass).
     event_type = HistoryEvent
 
+    #: Current index in :attr:`events` - those before this index are in the
+    #: 'past' (have been executed), and those after it are in the 'future'
+    #: (have been reverted).
+    position = 0
+
     def __init__ (self, future_type, permanent=False, require_reversible=False,
                   revert_on_failure=True, max_events=None,
                   expire_future_first=False, max_event_age=None,
@@ -124,10 +129,6 @@ class History:
         self.max_event_age = None
         #: ``current_time`` argument.
         self.current_time = None
-        #: Current index in :attr:`events` - those before this index are in the
-        #: 'past' (have been executed), and those after it are in the 'future'
-        #: (have been reverted).
-        self.position = None
 
     @property
     def events (self):

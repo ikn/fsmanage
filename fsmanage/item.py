@@ -1,3 +1,6 @@
+import re
+
+
 class Item:
     """Representation of something found in a filesystem tree.
 
@@ -10,12 +13,16 @@ manipulating the real items represented.
 This class may be used directly when you don't want to be specific about the
 item's type, or its type is unknown and shouldn't matter for what you're doing.
 
+Items are equal to each other if they have the same path.
+
 """
 
     def __init__ (self, path):
         #: ``path`` argument.
-        self.path = None
-        pass
+        self.path = tuple(path)
+
+    def __eq__ (self, other):
+        return isinstance(other, Item) and other.path == self.path
 
 
 class Dir (Item):
@@ -31,23 +38,26 @@ class OperableItem (Item):
     """Base class for items that can be changed by
 :mod:`operations <fsmanage.operation>`.
 
-The ``path`` argument must not be empty.
+:raises ValueError: if ``path`` is an empty sequence.
 
 """
 
     def __init__ (self, path):
         # check path is non-empty
-        pass
+        if not path:
+            raise ValueError('OperableItem path must be non-empty; got:', path)
+        Item.__init__ (self, path)
+
 
     @property
     def parent (self):
         """Path to the directory containing this item."""
-        pass
+        return self.path[:-1]
 
     @property
     def name (self):
         """The last component of :attr:`path <Item.path>`."""
-        pass
+        return self.path[-1]
 
 
 class OperableDir (Dir, OperableItem):
@@ -75,7 +85,15 @@ match_item_name(pattern) -> item_filter
 
 
 """
-    pass
+    match = (
+        (lambda name: name == pattern)
+        if isinstance(pattern, str)
+        else (lambda name: pattern.search(name) is not None)
+    )
+
+    return lambda item, op_manager: (
+        match(item.name) if isinstance(item, OperableItem) else False
+    )
 
 
 def match_item_path (pattern, render_path):
@@ -85,15 +103,29 @@ match_item_path(pattern, render_path) -> item_filter
 
 :arg pattern: exact path (sequence of strings) to expect, exact rendered path
     to expect, or a :mod:`re` regular expression object to search for in the
-    path.
+    rendered path.
 :arg render_path: function to use to render a path to a string when comparing
     to strings/regular expressions; takes a sequence of strings and returns a
     string.
 
-:returns: item filter function as taken by :class:`ItemFilter`.
+:returns: item filter function as taken by :class:`ItemFilter` (returns
+    :obj:`False` for objects of the wrong type).
 
 """
-    pass
+    if isinstance(pattern, str):
+        # rendered path
+        match = lambda path: path == pattern
+    elif hasattr(pattern, '__getitem__') and hasattr(pattern, '__len__'):
+        # sequence (path)
+        expect_path = render_path(pattern)
+        match = lambda path: path == expect_path
+    else:
+        # regex
+        match = lambda path: pattern.search(path) is not None
+
+    return lambda item, op_manager: (
+        match(render_path(item.path)) if isinstance(item, Item) else False
+    )
 
 
 def match_item_metadata (prop, pattern):
@@ -108,7 +140,8 @@ Metadata is retrieved using :meth:`OperationExecutor.get_metadata
 :arg pattern: exact value to expect, or a :mod:`re` regular expression object
     to search for in the value.  Missing properties become empty strings.
 
-:returns: item filter function as taken by :class:`ItemFilter`.
+:returns: item filter function as taken by :class:`ItemFilter` (returns
+    :obj:`False` for objects of the wrong type).
 
 """
     pass
@@ -169,8 +202,6 @@ class AttentionItems:
     this makes sense when the items might not exist, but there is a common link
     between them (usually the :class:`Dir` containing them).
 
-Instances may be combined using binary ``or`` (``a | b``).
-
 """
 
     #: Attention type indicating that the items are recently new or changed
@@ -180,9 +211,21 @@ Instances may be combined using binary ``or`` (``a | b``).
 
     def __init__ (self, items=(), parent=None):
         #: ``items`` argument.
-        self.items = None
+        self.items = tuple(items)
         #: ``parent`` argument.
-        self.parent = None
+        self.parent = parent
 
-    def __or__ (self, other):
-        pass
+    def extended (self, other):
+        """Return a combination of groups of attention items.
+
+:arg other: :class:`AttentionItems` to extend with.
+
+:returns: :class:`AttentionItems` which is a combination of this instance and
+    ``other``.  :attr:`items` attributes are combined by union over paths, and
+    :attr:`parent` attributes are combined by using one or the other, with
+    ``other`` taking precedence.
+
+"""
+        return AttentionItems(tuple({
+            item.path: item for item in self.items + other.items
+        }.values()), other.parent or self.parent)

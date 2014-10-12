@@ -187,12 +187,13 @@ Other arguments are as taken by :class:`History <fsmanage.history.History>`.
     #: :attr:`History.event_type <fsmanage.history.History.event_type>`.
     event_type = NavigationHistoryEvent
 
+    #: The current directory (path); :obj:`None` means the top-level directory
+    #: (see :attr:`root`).
+    cwd = None
+
     def __init__ (self, root=(), *args, **kwargs):
         #: ``root`` argument.
         self.root = None
-        #: The current directory (path); :obj:`None` means the top-level
-        #: directory (see :attr:`root`).  The initial value is :obj:`None`.
-        self.cwd = None
 
     def navigate (self, path):
         """Change the current directory to the given path."""

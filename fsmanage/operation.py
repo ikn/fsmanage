@@ -54,8 +54,9 @@ class OperationException (Exception):
 """
 
     def __init__ (self, op, reverted=True):
+        self._operation = op
         #: ``reverted`` argument.
-        self.reverted = None
+        self.reverted = reverted
 
     def summary (self):
         """Short description string of the error that occurred, as sentences.
@@ -63,7 +64,7 @@ class OperationException (Exception):
 Defined for this class as: 'Operation failed: <op.name>.'.
 
 """
-        pass
+        return 'Operation failed: {}.'.format(self._operation.name)
 
     def detail (self):
         """Extra error information string to accompany :attr:`summary`.
@@ -72,7 +73,7 @@ For example, this might mention items involved, or underlying causes for the
 error.  May be :obj:`None` (as is the case for this class).
 
 """
-        pass
+        return None
 
 
 class Confirmation (metaclass=abc.ABCMeta):
@@ -96,7 +97,7 @@ using a different subclass.
     CONFIRM_ALL = 2
 
     def __init__ (self, respond):
-        pass
+        self._respond = respond
 
     @property
     @abc.abstractmethod
@@ -129,9 +130,7 @@ This is an abstract property - it must be defined by subclasses.
     def respond (self, action):
         """Respond to this question.
 
-:attr:`CONFIRM`, :attr:`REJECT` or :attr:`CONFIRM_ALL`.
-
-:raises TypeError: if this method has already been called for this instance.
+:arg action: :attr:`CONFIRM`, :attr:`REJECT` or :attr:`CONFIRM_ALL`.
 
 """
-        pass
+        self._respond(action)

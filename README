@@ -16,3 +16,12 @@ included, you can find it here:
     DEPENDENCIES
 
 Python 3 (3.3 or later 3.x)
+
+    DOCUMENTATION
+
+To build HTML documentation, run `make doc' with GNU Make or equivalent.  The
+output is in `doc/_build/html'.
+
+    TESTS
+
+To run unit tests, run `make test' with GNU Make or equivalent.

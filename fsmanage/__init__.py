@@ -16,9 +16,13 @@ todo
 
 to get something working
  * the code
+    * history
+    * opexec
+    * item.{match_item_metadata,ItemFilter}
+    * action
+    * actionexec
  * basic implementations of functions/abstract classes
  * tests
- * -> ikn
 
 for GCEdit
  * needed implementations of functions/abstract classes
@@ -28,7 +32,7 @@ for GCEdit
  * sorting - eg. natural sort, dirs first...
  * qt
 
- * __str__/__repr__ implementations
+ * __eq__/__str__/__repr__ implementations
  * full examples in documentation
  * internationalisation
 
@@ -92,6 +96,7 @@ future
  * links (Link(OperableItem), Link(Operation), Link(Action))
  * can intercept and handle confirmations in ActionManager
  * operation manager exposes running operations and current progress
+ * operation manager: max number of get_metadata runners
  * history
     * something to handle HistoryActionResult.FAILED - option to reject all work if this happens?
     * can set max number of running events
@@ -108,3 +113,10 @@ future
  * qt History viewer/editor (events need icon and text)
 
 """
+
+from .item import *
+from .history import *
+from .operation import *
+from .opexec import *
+from .action import *
+from .actionexec import *

@@ -13,6 +13,11 @@ arbitrary filesystem implementations.  It should be flexible enough to support
 any sort of interface, but is aimed at long-running programs (for example, an
 application, as opposed to a one-shot command like ``cp`` or ``mv``).
 
+The top-level package contains all core objects - everything from
+:mod:`item <fsmanage.item>`, :mod:`history <fsmanage.history>`,
+:mod:`operation <fsmanage.operation>`, :mod:`opexec <fsmanage.opexec>`,
+:mod:`action <fsmanage.action>` and :mod:`actionexec <fsmanage.actionexec>`.
+
 Items
 -----
 
@@ -92,4 +97,3 @@ Modules
    opexec
    action
    actionexec
-   core

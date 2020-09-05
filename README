@@ -5,7 +5,7 @@ A Python library for flexible management of arbitrary filesystems.
 Current status: basic class interfaces are defined as stubs with full
 documentation.
 
-http://ikn.org.uk/fsmanage
+http://ikn.org.uk/lib/fsmanage
 
     LICENSE
 

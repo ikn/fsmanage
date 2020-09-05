@@ -41,20 +41,11 @@ exclude_patterns = ['_build']
 # unit titles (such as .. function::).
 add_module_names = False
 
-autodoc_default_flags = ('members', 'undoc-members', 'show-inheritance')
+autodoc_default_flags = ['members', 'undoc-members', 'show-inheritance']
 autodoc_member_order = 'bysource'
 autodoc_docstring_signature = True
 
 intersphinx_mapping = {'python': ('http://docs.python.org/3/', None)}
-
-# HACK: make Sphinx handle tuple return annotations slightly better
-sphinx.domains.python.py_sig_re = re.compile(
-    r'''^ ([\w.]*\.)?            # class name(s)
-        (\w+)  \s*             # thing name
-        (?: \((.*?)\)           # optional: arguments
-        (?:\s* -> \s* (.*))?  #           return annotation
-        )? $                   # and nothing more
-        ''', re.VERBOSE)
 
 pat1 = re.compile(r',\n\ *')
 pat2 = re.compile(r'\n\ *')

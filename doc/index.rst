@@ -6,7 +6,7 @@ management tools.
 
 - version: ``0-next``
 - dependencies: Python 3.3 or later 3.x
-- home page: http://ikn.org.uk/fsmanage
+- home page: http://ikn.org.uk/lib/fsmanage
 
 This package contains tools for writing filesystem management interfaces for
 arbitrary filesystem implementations.  It should be flexible enough to support
